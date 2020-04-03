@@ -1,4 +1,4 @@
-package com.example.bookshelf;
+package edu.temple.bookshelf;
 
 import android.os.Bundle;
 
@@ -9,19 +9,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import java.util.HashMap;
 
 
 public class BookDetailsFragment extends Fragment {
 
     private static final String BOOK_KEY = "book";
-    private HashMap<String, String> book;
+    private Book book;
 
     TextView titleTextView, authorTextView;
 
     public BookDetailsFragment() {}
 
-    public static BookDetailsFragment newInstance(HashMap<String, String> book) {
+    public static BookDetailsFragment newInstance(Book book) {
         BookDetailsFragment fragment = new BookDetailsFragment();
         Bundle args = new Bundle();
 
@@ -30,16 +29,18 @@ public class BookDetailsFragment extends Fragment {
          therefore we can place a HashMap inside a bundle
          by using that put() method.
          */
-        args.putSerializable(BOOK_KEY, book);
+        /*TODO: Figure out how to bundle Book data eloquently*/
+        //args.putSerializable(BOOK_KEY, book);
         fragment.setArguments(args);
         return fragment;
     }
 
+    /*TODO: Make sure this is loading data properly*/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            book = (HashMap) getArguments().getSerializable(BOOK_KEY);
+            book = (Book) getArguments().getSerializable(BOOK_KEY);
         }
     }
 
@@ -65,8 +66,14 @@ public class BookDetailsFragment extends Fragment {
     This method is used both internally and externally (from the activity)
     to display a book
      */
-    public void displayBook(HashMap<String, String> book) {
-        titleTextView.setText(book.get("title"));
-        authorTextView.setText(book.get("author"));
+
+    /*TODO: Add functionality*/
+    public void displayBook(Book book) {
+        //titleTextView.setText(book.get("title"));
+        //authorTextView.setText(book.get("author"));
+        /*Display title*/
+        /*Display author*/
+        /*Display cover from coverURL*/
+
     }
 }

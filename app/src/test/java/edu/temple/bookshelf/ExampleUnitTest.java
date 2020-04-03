@@ -1,4 +1,4 @@
-package com.example.bookshelf;
+package edu.temple.bookshelf;
 
 import org.junit.Test;
 

@@ -1,4 +1,4 @@
-package com.example.bookshelf;
+package edu.temple.bookshelf;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -12,18 +12,17 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class BookListFragment extends Fragment {
 
     private static final String BOOK_LIST_KEY = "booklist";
-    private ArrayList<HashMap<String, String>> books;
+    private ArrayList<Book> books;
 
     BookSelectedInterface parentActivity;
 
     public BookListFragment() {}
 
-    public static BookListFragment newInstance(ArrayList<HashMap<String, String>> books) {
+    public static BookListFragment newInstance(ArrayList<Book> books) {
         BookListFragment fragment = new BookListFragment();
         Bundle args = new Bundle();
 
@@ -56,6 +55,7 @@ public class BookListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+            /*TODO: Update this to retrieve Book data properly*/
             books = (ArrayList) getArguments().getSerializable(BOOK_LIST_KEY);
         }
     }

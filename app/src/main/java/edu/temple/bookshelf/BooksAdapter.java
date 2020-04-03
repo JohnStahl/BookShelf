@@ -1,4 +1,4 @@
-package com.example.bookshelf;
+package edu.temple.bookshelf;
 
 import android.content.Context;
 import android.view.LayoutInflater;
@@ -9,12 +9,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class BooksAdapter extends BaseAdapter {
 
     Context context;
-    ArrayList<HashMap<String, String>> books;
+    ArrayList<Book> books;
 
     public BooksAdapter (Context context, ArrayList books) {
         this.context = context;
@@ -51,8 +50,8 @@ public class BooksAdapter extends BaseAdapter {
         titleTextView = convertView.findViewById(R.id.titleTextView);
         authorTextView = convertView.findViewById(R.id.authorTextView);
 
-        titleTextView.setText(((HashMap<String, String>) getItem(position)).get("title"));
-        authorTextView.setText(((HashMap<String, String>) getItem(position)).get("author"));
+        titleTextView.setText(((Book) getItem(position)).getTitle());
+        authorTextView.setText(((Book) getItem(position)).getAuthor());
 
         return convertView;
     }

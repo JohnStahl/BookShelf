@@ -1,4 +1,4 @@
-package com.example.bookshelf;
+package edu.temple.bookshelf;
 
 import android.content.Context;
 
@@ -22,6 +22,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
 
-        assertEquals("com.example.bookshelf", appContext.getPackageName());
+        assertEquals("edu.temple.bookshelf", appContext.getPackageName());
     }
 }

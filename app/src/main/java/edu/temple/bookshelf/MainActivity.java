@@ -1,4 +1,4 @@
-package com.example.bookshelf;
+package edu.temple.bookshelf;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentManager;
 import android.os.Bundle;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements BookListFragment.BookSelectedInterface {
 
@@ -43,17 +42,17 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     /*
     Generate an arbitrary list of "books" for testing
      */
-    private ArrayList<HashMap<String, String>> getTestBooks() {
-        ArrayList<HashMap<String, String>> books = new ArrayList<HashMap<String, String>>();
-        HashMap<String, String> book;
+    private ArrayList<Book> getTestBooks() {
+        ArrayList<Book> books = new ArrayList<>();
+        Book book;
         for (int i = 0; i < 10; i++) {
-            book = new HashMap<String, String>();
-            book.put("title", "Book" + i);
-            book.put("author", "Author" + i);
+            book = new Book(i, "Title" + i, "Author" + i, "URL" + i);
+            //book.put("title", "Book" + i);
+            //book.put("author", "Author" + i);
             books.add(book);
         }
         return books;
-    };
+    }
 
     @Override
     public void bookSelected(int index) {
