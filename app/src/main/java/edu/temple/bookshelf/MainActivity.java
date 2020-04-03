@@ -47,8 +47,6 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         Book book;
         for (int i = 0; i < 10; i++) {
             book = new Book(i, "Title" + i, "Author" + i, "URL" + i);
-            //book.put("title", "Book" + i);
-            //book.put("author", "Author" + i);
             books.add(book);
         }
         return books;

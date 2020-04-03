@@ -26,11 +26,6 @@ public class BookListFragment extends Fragment {
         BookListFragment fragment = new BookListFragment();
         Bundle args = new Bundle();
 
-        /*
-         A HashMap implements the Serializable interface
-         therefore we can place a HashMap inside a bundle
-         by using that put() method.
-         */
         args.putSerializable(BOOK_LIST_KEY, books);
         fragment.setArguments(args);
         return fragment;
@@ -55,7 +50,6 @@ public class BookListFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            /*TODO: Update this to retrieve Book data properly*/
             books = (ArrayList) getArguments().getSerializable(BOOK_LIST_KEY);
         }
     }

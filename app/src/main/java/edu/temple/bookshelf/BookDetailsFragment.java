@@ -24,20 +24,12 @@ public class BookDetailsFragment extends Fragment {
     public static BookDetailsFragment newInstance(Book book) {
         BookDetailsFragment fragment = new BookDetailsFragment();
         Bundle args = new Bundle();
-
-        /*
-         A HashMap implements the Serializable interface
-         therefore we can place a HashMap inside a bundle
-         by using that put() method.
-         */
-        /*TODO: Figure out how to bundle Book data eloquently*/
-
+        
         args.putSerializable(BOOK_KEY, new Gson().toJson(book));
         fragment.setArguments(args);
         return fragment;
     }
 
-    /*TODO: Make sure this is loading data properly*/
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +62,7 @@ public class BookDetailsFragment extends Fragment {
     to display a book
      */
 
-    /*TODO: Add functionality*/
+    /*TODO: Have displayBook display image from coverURL*/
     public void displayBook(Book book) {
         titleTextView.setText(book.getTitle());
         authorTextView.setText(book.getAuthor());
