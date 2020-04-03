@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
 
 
 public class BookDetailsFragment extends Fragment {
@@ -30,7 +31,8 @@ public class BookDetailsFragment extends Fragment {
          by using that put() method.
          */
         /*TODO: Figure out how to bundle Book data eloquently*/
-        //args.putSerializable(BOOK_KEY, book);
+
+        args.putSerializable(BOOK_KEY, new Gson().toJson(book));
         fragment.setArguments(args);
         return fragment;
     }
@@ -40,7 +42,8 @@ public class BookDetailsFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            book = (Book) getArguments().getSerializable(BOOK_KEY);
+            String json = (String) getArguments().getSerializable(BOOK_KEY);
+            book = (Book) new Gson().fromJson(json, Book.class);
         }
     }
 
@@ -69,10 +72,8 @@ public class BookDetailsFragment extends Fragment {
 
     /*TODO: Add functionality*/
     public void displayBook(Book book) {
-        //titleTextView.setText(book.get("title"));
-        //authorTextView.setText(book.get("author"));
-        /*Display title*/
-        /*Display author*/
+        titleTextView.setText(book.getTitle());
+        authorTextView.setText(book.getAuthor());
         /*Display cover from coverURL*/
 
     }
