@@ -44,11 +44,12 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     /*
     Generate an arbitrary list of "books" for testing
      */
+    /*TODO: Use https://kamorris.com/lab/abp/booksearch.php?search=search_string to retrieve book information*/
     private ArrayList<Book> getTestBooks() {
         ArrayList<Book> books = new ArrayList<>();
         Book book;
         for (int i = 0; i < 10; i++) {
-            book = new Book(i, "Title" + i, "Author" + i, "https://i.imgur.com/Mudj9zY.jpg");
+            book = new Book(i, "Title" + i, "Author" + i, "https://kamorris.com//lab//abp//covers//oliver_twist.jpg");
             books.add(book);
         }
         return books;
