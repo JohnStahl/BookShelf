@@ -7,9 +7,11 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.squareup.picasso.Picasso;
 
 
 public class BookDetailsFragment extends Fragment {
@@ -18,13 +20,14 @@ public class BookDetailsFragment extends Fragment {
     private Book book;
 
     TextView titleTextView, authorTextView;
+    ImageView coverImageView;
 
     public BookDetailsFragment() {}
 
     public static BookDetailsFragment newInstance(Book book) {
         BookDetailsFragment fragment = new BookDetailsFragment();
         Bundle args = new Bundle();
-        
+
         args.putSerializable(BOOK_KEY, new Gson().toJson(book));
         fragment.setArguments(args);
         return fragment;
@@ -46,6 +49,7 @@ public class BookDetailsFragment extends Fragment {
 
         titleTextView = v.findViewById(R.id.titleTextView);
         authorTextView = v.findViewById(R.id.authorTextView);
+        coverImageView = v.findViewById(R.id.coverImageView);
 
         /*
         Because this fragment can be created with or without
@@ -66,7 +70,10 @@ public class BookDetailsFragment extends Fragment {
     public void displayBook(Book book) {
         titleTextView.setText(book.getTitle());
         authorTextView.setText(book.getAuthor());
+        coverImageView.setContentDescription("Cover image of " + book.getTitle());
         /*Display cover from coverURL*/
+        Picasso.get().setLoggingEnabled(true);
+        Picasso.get().load(book.getCoverURL()).into(coverImageView);
 
     }
 }

@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         twoPane = findViewById(R.id.container2) != null;
 
         fm = getSupportFragmentManager();
@@ -46,7 +48,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         ArrayList<Book> books = new ArrayList<>();
         Book book;
         for (int i = 0; i < 10; i++) {
-            book = new Book(i, "Title" + i, "Author" + i, "URL" + i);
+            book = new Book(i, "Title" + i, "Author" + i, "https://i.imgur.com/Mudj9zY.jpg");
             books.add(book);
         }
         return books;
