@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/titleTextView"
-        android:layout_width="197dp"
-        android:layout_height="62dp"
+        android:layout_width="284dp"
+        android:layout_height="91dp"
         android:layout_marginTop="8dp"
         android:textAlignment="center"
         android:textSize="32sp"
@@ -20,13 +20,11 @@
 
     <TextView
         android:id="@+id/authorTextView"
-        android:layout_width="203dp"
-        android:layout_height="81dp"
-        android:layout_marginTop="8dp"
+        android:layout_width="281dp"
+        android:layout_height="55dp"
         android:textAlignment="center"
         android:textSize="22sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/titleTextView" />
 

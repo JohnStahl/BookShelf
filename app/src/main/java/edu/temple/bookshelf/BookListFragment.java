@@ -17,6 +17,7 @@ public class BookListFragment extends Fragment {
 
     private static final String BOOK_LIST_KEY = "booklist";
     private ArrayList<Book> books;
+    private ArrayList<Book> searchResults;
 
     BookSelectedInterface parentActivity;
 
