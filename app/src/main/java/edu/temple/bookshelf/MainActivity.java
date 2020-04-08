@@ -1,5 +1,6 @@
 package edu.temple.bookshelf;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
@@ -76,7 +77,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                                 //Toast.makeText(getApplicationContext(), String.valueOf(BOOK_LIST.size()),Toast.LENGTH_SHORT).show();
                             }
                             fm.beginTransaction()
-                                    .replace(R.id.container1, BookListFragment.newInstance(BOOK_LIST))
+                                    .replace(R.id.container1, BookListFragment.newInstance(searchBooks(search, BOOK_LIST)))
                                     .commit();
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -158,5 +159,17 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     .addToBackStack(null)
                     .commit();
         }
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("search", search);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        search = savedInstanceState.getString("search");
     }
 }
