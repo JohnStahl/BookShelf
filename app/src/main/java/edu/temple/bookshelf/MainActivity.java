@@ -47,6 +47,9 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             @Override
             public void onClick(View v) {
                 search = searchEditText.getText().toString();
+                fm.beginTransaction()
+                        .replace(R.id.container1, BookListFragment.newInstance(searchBooks(search, BOOK_LIST)))
+                        .commit();
             }
         });
 
@@ -144,13 +147,13 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
             /*
             Display selected book using previously attached fragment
              */
-            bookDetailsFragment.displayBook(getTestBooks().get(index));
+            bookDetailsFragment.displayBook(searchBooks(search, BOOK_LIST).get(index));
         else {
             /*
             Display book using new fragment
              */
             fm.beginTransaction()
-                    .replace(R.id.container1, BookDetailsFragment.newInstance(getTestBooks().get(index)))
+                    .replace(R.id.container1, BookDetailsFragment.newInstance(searchBooks(search, BOOK_LIST).get(index)))
                     // Transaction is reversible
                     .addToBackStack(null)
                     .commit();
