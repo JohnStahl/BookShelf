@@ -71,7 +71,7 @@ public class BookDetailsFragment extends Fragment {
         authorTextView.setText(book.getAuthor());
         coverImageView.setContentDescription("Cover image of " + book.getTitle());
         /*Display cover from coverURL*/
-        Picasso.get().setLoggingEnabled(true);
+        //Picasso.get().setLoggingEnabled(true);
         Picasso.get().load(book.getCoverURL()).into(coverImageView);
 
     }

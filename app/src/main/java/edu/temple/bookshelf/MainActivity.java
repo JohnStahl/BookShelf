@@ -32,9 +32,10 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     ArrayList<Book> BOOK_LIST = new ArrayList<>();
     RequestQueue requestQueue;
     EditText searchEditText;
+    int selectedBook;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(final Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -79,6 +80,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                             fm.beginTransaction()
                                     .replace(R.id.container1, BookListFragment.newInstance(searchBooks(search, BOOK_LIST)))
                                     .commit();
+                            if(savedInstanceState != null) bookSelected(selectedBook);
+                            
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
@@ -143,6 +146,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     @Override
     public void bookSelected(int index) {
+        selectedBook = index;
 
         if (twoPane)
             /*
@@ -165,11 +169,13 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
         outState.putString("search", search);
+        outState.putInt("selectedBook", selectedBook);
     }
 
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
         search = savedInstanceState.getString("search");
+        selectedBook = savedInstanceState.getInt("selectedBook");
     }
 }
