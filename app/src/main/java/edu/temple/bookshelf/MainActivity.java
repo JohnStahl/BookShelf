@@ -62,19 +62,21 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     public void onResponse(JSONArray response) {
                         try {
                             int book_id;
-                            String title = "";
-                            String author = "";
-                            String cover_url = "";
+                            int duration;
+                            String title;
+                            String author;
+                            String cover_url;
 
                             for(int i = 0; i < 7; i++){
                                 JSONObject jsonObject = response.getJSONObject(i);
 
                                 book_id = Integer.parseInt(jsonObject.getString("book_id"));
+                                duration = Integer.parseInt(jsonObject.getString("duration"));
                                 title = jsonObject.getString("title");
                                 author = jsonObject.getString("author");
                                 cover_url = jsonObject.getString("cover_url");
 
-                                BOOK_LIST.add(new Book(book_id,title, author, cover_url));
+                                BOOK_LIST.add(new Book(book_id, duration, title, author, cover_url));
                                 //Toast.makeText(getApplicationContext(), String.valueOf(BOOK_LIST.size()),Toast.LENGTH_SHORT).show();
                             }
                             fm.beginTransaction()
@@ -122,7 +124,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         Book book;
 
         for (int i = 0; i < 10; i++) {
-            book = new Book(i, "Title" + i, "Author" + i, "https://kamorris.com//lab//abp//covers//oliver_twist.jpg");
+            book = new Book(i, 0, "Title" + i, "Author" + i, "https://kamorris.com//lab//abp//covers//oliver_twist.jpg");
             books.add(book);
         }
 
