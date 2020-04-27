@@ -4,11 +4,19 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentManager;
 
+import android.content.ComponentName;
+import android.content.Intent;
+import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.SeekBar;
+import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -22,17 +30,44 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import edu.temple.audiobookplayer.AudiobookService;
+
 public class MainActivity extends AppCompatActivity implements BookListFragment.BookSelectedInterface {
 
-    FragmentManager fm;
-    boolean twoPane;
-    BookDetailsFragment bookDetailsFragment;
-    String search = "";
     final String BOOK_URL = "https://kamorris.com/lab/abp/booksearch.php?search=";
     ArrayList<Book> BOOK_LIST = new ArrayList<>();
+
+    BookDetailsFragment bookDetailsFragment;
     RequestQueue requestQueue;
+    FragmentManager fm;
+    boolean twoPane;
+
+    /*Views*/
+    TextView nowPlayingTextView;
+    SeekBar durationSeekbar;
     EditText searchEditText;
+
+    /*AudiobookService*/
+    Intent serviceIntent;
+    boolean connected;
+    AudiobookService.MediaControlBinder binder;
+
+    ServiceConnection serviceConnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
+            connected = true;
+            binder = (AudiobookService.MediaControlBinder) service;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+            connected = false;
+        }
+    };
+
+    /*Saved instance data*/
     int selectedBook;
+    String search = "";
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -43,8 +78,15 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         fm = getSupportFragmentManager();
         requestQueue = Volley.newRequestQueue(this);
 
-        /*Setting up search button*/
+        /*Finding views*/
+        nowPlayingTextView = findViewById(R.id.nowPlayingTextView);
         searchEditText = findViewById(R.id.searchEditText);
+
+        /*Connecting to AudiobookService*/
+        serviceIntent = new Intent(MainActivity.this, AudiobookService.class);
+        bindService(serviceIntent, serviceConnection, BIND_AUTO_CREATE);
+
+        /*Setting up search button*/
         findViewById(R.id.searchButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -54,6 +96,52 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                         .commit();
             }
         });
+
+        /*Setting up pause button*/
+        findViewById(R.id.pauseButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Pause", Toast.LENGTH_SHORT).show();
+                binder.pause();
+
+            }
+        });
+
+        /*Setting up stop button*/
+        findViewById(R.id.stopButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                nowPlayingTextView.setText("");
+                if (connected){
+                    Toast.makeText(getApplicationContext(), "Stopping", Toast.LENGTH_SHORT).show();
+                    binder.stop();
+                    stopService(serviceIntent);
+                }else{
+                    Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+
+        /*Setting up seekbar*/
+        durationSeekbar = findViewById(R.id.seekBar);
+
+        durationSeekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
+            @Override
+            public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+
+            }
+
+            @Override
+            public void onStartTrackingTouch(SeekBar seekBar) {
+
+            }
+
+            @Override
+            public void onStopTrackingTouch(SeekBar seekBar) {
+
+            }
+        });
+
 
         /*Pull list of books from BOOK_URL*/
         JsonArrayRequest jsonArrayRequest = new JsonArrayRequest(BOOK_URL,
@@ -113,6 +201,10 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     .replace(R.id.container2, bookDetailsFragment)
                     .commit();
         }
+
+
+
+
     }
 
     /*
@@ -131,7 +223,17 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         return books;
     }
 
+    public void playAudiobook(int id, String title){
+        if(connected){
+            nowPlayingTextView.setText("Now playing: " + title);
+            Toast.makeText(getApplicationContext(), "Playing", Toast.LENGTH_SHORT).show();
+            binder.play(id);
+            startService(serviceIntent);
+        }else {
+            Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
+        }
 
+    }
     /*
     Accepts a string and an ArrayList of books then returns an ArrayList of books that have the
     given string as a substring in their title.
@@ -179,5 +281,11 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         super.onRestoreInstanceState(savedInstanceState);
         search = savedInstanceState.getString("search");
         selectedBook = savedInstanceState.getInt("selectedBook");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unbindService(serviceConnection);
     }
 }

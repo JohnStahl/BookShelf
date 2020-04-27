@@ -19,6 +19,7 @@ public class BookDetailsFragment extends Fragment {
     private static final String BOOK_KEY = "book";
     private Book book;
 
+    /*Views*/
     TextView titleTextView, authorTextView;
     ImageView coverImageView;
 
@@ -47,9 +48,18 @@ public class BookDetailsFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_book_details, container, false);
 
+        /*Finding views*/
         titleTextView = v.findViewById(R.id.titleTextView);
         authorTextView = v.findViewById(R.id.authorTextView);
         coverImageView = v.findViewById(R.id.coverImageView);
+
+        /*Setting up play button*/
+        v.findViewById(R.id.playButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((MainActivity)getActivity()).playAudiobook(book.getId(), book.getTitle());
+            }
+        });
 
         /*
         Because this fragment can be created with or without
