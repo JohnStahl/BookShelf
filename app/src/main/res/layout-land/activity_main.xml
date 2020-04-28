@@ -19,17 +19,23 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <SeekBar
+        android:id="@+id/seekBar"
+        android:layout_width="243dp"
+        android:layout_height="38dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="16dp"
+        app:layout_constraintEnd_toStartOf="@+id/container2"
+        app:layout_constraintTop_toBottomOf="@+id/container1" />
+
     <FrameLayout
         android:id="@+id/container1"
-        android:layout_width="250dp"
-        android:layout_height="0dp"
+        android:layout_width="244dp"
+        android:layout_height="188dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/searchEditText"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintTop_toBottomOf="@+id/searchEditText">
 
     </FrameLayout>
 
@@ -58,4 +64,30 @@
         android:text="search"
         app:layout_constraintEnd_toStartOf="@+id/container2"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/pauseButton"
+        android:layout_width="79dp"
+        android:layout_height="38dp"
+        android:layout_marginEnd="16dp"
+        android:text="Pause"
+        app:layout_constraintEnd_toStartOf="@+id/container2"
+        app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+
+    <Button
+        android:id="@+id/stopButton"
+        android:layout_width="75dp"
+        android:layout_height="39dp"
+        android:layout_marginStart="16dp"
+        android:text="Stop"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/seekBar" />
+
+    <TextView
+        android:id="@+id/nowPlayingTextView"
+        android:layout_width="244dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/stopButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

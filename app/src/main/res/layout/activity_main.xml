@@ -47,34 +47,27 @@
         android:id="@+id/stopButton"
         android:layout_width="75dp"
         android:layout_height="39dp"
-        android:layout_marginStart="32dp"
-        android:layout_marginEnd="9dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="24dp"
         android:text="Stop"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/pauseButton"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/seekBar"
-        app:layout_constraintVertical_bias="0.116" />
+        app:layout_constraintTop_toBottomOf="@+id/seekBar" />
 
     <Button
         android:id="@+id/pauseButton"
         android:layout_width="75dp"
         android:layout_height="39dp"
-        android:layout_marginStart="9dp"
-        android:layout_marginEnd="23dp"
-        android:layout_marginBottom="17dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="8dp"
         android:text="Pause"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/nowPlayingTextView"
-        app:layout_constraintStart_toEndOf="@+id/stopButton"
-        app:layout_constraintTop_toBottomOf="@+id/seekBar"
-        app:layout_constraintVertical_bias="0.116" />
+        app:layout_constraintTop_toBottomOf="@+id/seekBar" />
 
     <SeekBar
         android:id="@+id/seekBar"
-        android:layout_width="367dp"
-        android:layout_height="36dp"
+        android:layout_width="354dp"
+        android:layout_height="30dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
@@ -82,15 +75,11 @@
 
     <TextView
         android:id="@+id/nowPlayingTextView"
-        android:layout_width="168dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="19dp"
-        android:layout_marginTop="14dp"
+        android:layout_width="161dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="29dp"
-        android:layout_marginBottom="143dp"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/pauseButton"
         app:layout_constraintTop_toBottomOf="@+id/seekBar" />
 
 

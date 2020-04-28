@@ -68,6 +68,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     /*Saved instance data*/
     int selectedBook;
     String search = "";
+    String nowPlaying;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -128,7 +129,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         durationSeekbar.setOnSeekBarChangeListener(new OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
-
+                if (fromUser) binder.seekTo(progress);
             }
 
             @Override
@@ -170,7 +171,10 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                             fm.beginTransaction()
                                     .replace(R.id.container1, BookListFragment.newInstance(searchBooks(search, BOOK_LIST)))
                                     .commit();
-                            if(savedInstanceState != null) bookSelected(selectedBook);
+                            if(savedInstanceState != null){
+                                bookSelected(selectedBook);
+                                nowPlayingTextView.setText(nowPlaying);
+                            }
                             
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -223,11 +227,12 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         return books;
     }
 
-    public void playAudiobook(int id, String title){
+    public void playAudiobook(int id, int duration, String title){
         if(connected){
             nowPlayingTextView.setText("Now playing: " + title);
             Toast.makeText(getApplicationContext(), "Playing", Toast.LENGTH_SHORT).show();
             binder.play(id);
+            durationSeekbar.setMax(duration);
             startService(serviceIntent);
         }else {
             Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
@@ -274,6 +279,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         super.onSaveInstanceState(outState);
         outState.putString("search", search);
         outState.putInt("selectedBook", selectedBook);
+        outState.putString("nowPlaying", nowPlaying);
     }
 
     @Override
@@ -281,11 +287,12 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         super.onRestoreInstanceState(savedInstanceState);
         search = savedInstanceState.getString("search");
         selectedBook = savedInstanceState.getInt("selectedBook");
+        nowPlaying = savedInstanceState.getString("nowPlaying");
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        unbindService(serviceConnection);
+        //unbindService(serviceConnection);
     }
 }

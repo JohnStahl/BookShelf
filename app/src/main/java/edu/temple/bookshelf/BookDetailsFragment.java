@@ -57,7 +57,7 @@ public class BookDetailsFragment extends Fragment {
         v.findViewById(R.id.playButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((MainActivity)getActivity()).playAudiobook(book.getId(), book.getTitle());
+                ((MainActivity)getActivity()).playAudiobook(book.getId(), book.getDuration(), book.getTitle());
             }
         });
 
