@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
     int selectedBook;
     String search = "";
     String nowPlaying;
+    int duration;
 
     @Override
     protected void onCreate(final Bundle savedInstanceState) {
@@ -82,6 +83,8 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         /*Finding views*/
         nowPlayingTextView = findViewById(R.id.nowPlayingTextView);
         searchEditText = findViewById(R.id.searchEditText);
+
+        if(savedInstanceState != null)nowPlayingTextView.setText("Now playing: " + nowPlaying);
 
         /*Connecting to AudiobookService*/
         serviceIntent = new Intent(MainActivity.this, AudiobookService.class);
@@ -117,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
                     Toast.makeText(getApplicationContext(), "Stopping", Toast.LENGTH_SHORT).show();
                     binder.stop();
                     stopService(serviceIntent);
+                    durationSeekbar.setProgress(0);
                 }else{
                     Toast.makeText(getApplicationContext(), "Not connected", Toast.LENGTH_SHORT).show();
                 }
@@ -229,6 +233,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
 
     public void playAudiobook(int id, int duration, String title){
         if(connected){
+            this.duration = duration;
             nowPlayingTextView.setText("Now playing: " + title);
             Toast.makeText(getApplicationContext(), "Playing", Toast.LENGTH_SHORT).show();
             binder.play(id);
@@ -280,6 +285,7 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         outState.putString("search", search);
         outState.putInt("selectedBook", selectedBook);
         outState.putString("nowPlaying", nowPlaying);
+        outState.putInt("duration", duration);
     }
 
     @Override
@@ -288,11 +294,14 @@ public class MainActivity extends AppCompatActivity implements BookListFragment.
         search = savedInstanceState.getString("search");
         selectedBook = savedInstanceState.getInt("selectedBook");
         nowPlaying = savedInstanceState.getString("nowPlaying");
+        duration = savedInstanceState.getInt("duration");
+
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        //unbindService(serviceConnection);
+        unbindService(serviceConnection);
     }
 }
